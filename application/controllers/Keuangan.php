@@ -276,5 +276,13 @@ class Keuangan extends CI_Controller
         redirect('keuangan/editkas/KAS/'.$kasid);
     }
 
+    public function simpanKasDetail($id, $kasid)
+    {
+        $this->Keuangan_model->simpanKasDetail($id, $kasid);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Transaction has ben updated!</div>');
+        redirect('keuangan/editkas/KAS/'.$kasid);
+
+    }
+
    
 }

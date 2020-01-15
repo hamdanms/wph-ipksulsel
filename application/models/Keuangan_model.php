@@ -71,11 +71,7 @@ class Keuangan_model extends CI_Model
     
     public function tambahPemasukanLuarUsahaCart()
     {
-        $saldo = $this->db->get_where('menu', ['id' => $this->input->post('menu_id') ])->row_array();
-
-        // echo $this->input->post('idkas');
-        // die;
-
+        
         $data = [
             'id_pemasukan' => $this->input->post('idkas'),
             'harga' => $this->input->post('harga'),
@@ -256,6 +252,22 @@ class Keuangan_model extends CI_Model
         ];
         $this->db->where('id', $kasid);
         $this->db->update('pemasukan_', $data);
+    }
+
+    public function simpanKasDetail($id, $kasid)
+    {
+        $harga = $this->db->get_where('menu', ['id' => $this->input->post('id_menu') ])->row_array();
+
+        $data = [
+            'id_menu'   => $this->input->post('id_menu') ,
+            'keterangan'   => $this->input->post('keterangan') ,
+            'jumlah'   => $this->input->post('jumlah') ,
+            'harga'   => $harga['harga'] 
+        ];
+        $this->db->where('id', $id);
+        $this->db->update('pemasukan_detail', $data);
+
+        $this->_updateKAS($kasid);
     }
 
 
