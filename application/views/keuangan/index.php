@@ -53,7 +53,7 @@
                             <td><?php $subtotal = $m['harga'] * $m['jumlah']; $total += $subtotal; ?> <?= "Rp " . number_format($subtotal,2,',','.') ; ?></td>  
                             <td>
                                 <!-- <i href="" class="badge badge-success"><i class="far fa-edit"></i></a> -->
-                                <a href="<?= base_url('keuangan/deletePemasukanCart/'.$m['id']); ?>" class="badge badge-danger"><i class="far fa-trash-alt"></i></a>
+                                <a href="<?= base_url('keuangan/deletePemasukanCart/'.$m['id']); ?>" class="badge badge-danger" onclick="return confirm('Apakah anda yakin untuk menghapus data ?')"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
                         <?php $i++; ?>

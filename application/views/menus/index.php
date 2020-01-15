@@ -43,7 +43,7 @@
                                     <td><?= strtoupper($m['menu']); ?></td>
                                     <td><?= "Rp " . number_format($m['harga'],2,',','.'); ?></td>
                                     <td>
-                                        <a href="" class="badge badge-success" data-toggle="modal" data-target="#newMenusModal<?=$m['id']?>"><i class="far fa-edit"></i></a>
+                                        <a href="" class="badge badge-success" data-toggle="modal" data-target="#newMenusModal<?=$m['id']?>" class="badge badge-danger" onclick="return confirm('Apakah anda yakin untuk menghapus data ?')"><i class="far fa-edit"></i></a>
                                         <a href="<?= base_url('menus/deleteMenus/'.$m['id']); ?>" class="badge badge-danger"><i class="far fa-trash-alt"></i></a>
                                     </td>
                                 </tr>

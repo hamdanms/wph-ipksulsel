@@ -50,7 +50,7 @@
                             <td><?= $ss += $m['harga'];  ?></td>
                             <td>
                                 <!-- <i href="" class="badge badge-success"><i class="far fa-edit"></i></a> -->
-                                <a href="<?= base_url('keuangan/deletePemasukanEksCart/'.$m['id']); ?>" class="badge badge-danger"><i class="far fa-trash-alt"></i></a>
+                                <a href="<?= base_url('keuangan/deletePemasukanEksCart/'.$m['id']); ?>" class="badge badge-danger"><i class="far fa-trash-alt" class="badge badge-danger" onclick="return confirm('Apakah anda yakin untuk menghapus data ?')"></i></a>
                             </td>
                         </tr>
                         <?php $i++; $total += $ss; ?>

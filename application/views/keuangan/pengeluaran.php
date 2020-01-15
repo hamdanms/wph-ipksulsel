@@ -56,7 +56,7 @@
                             <td><?php $subtotal = $m['harga'] * $m['jumlah']; $total += $subtotal; ?> <?= "Rp " . number_format($subtotal,2,',','.') ; ?></td>  
                             <td>
                                 <a href="" data-toggle="modal" data-target="#editPemasukanModal<?= $m['id']?>" class="badge badge-success"><i class="far fa-fw fa-edit"></i></a>
-                                <a href="<?= base_url('keuangan/deletePengeluaran/'.$m['id']); ?>" class="badge badge-danger"><i class="far fa-fw fa-trash-alt"></i></a>
+                                <a href="<?= base_url('keuangan/deletePengeluaran/'.$m['id']); ?>" class="badge badge-danger" class="badge badge-danger" onclick="return confirm('Apakah anda yakin untuk menghapus data ?')"><i class="far fa-fw fa-trash-alt"></i></a>
                             </td>
                         </tr>
                         <?php $i++; ?>
