@@ -200,6 +200,7 @@ class Keuangan extends CI_Controller
     {
 
         if ($indikator == 'KAS' ){
+            $this->Keuangan_model->_updateKAS($id);
             $this->_kas($id);
         } else {
             $this->_kaseks($id);
@@ -215,9 +216,10 @@ class Keuangan extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
         $data['keuangan'][] = $this->Keuangan_model->GetKasEdit($id);
-        // $data['keuangan'][] = $this->Keuangan_model->GetKasEks();
+        $data['keuangan'][] = $this->Keuangan_model->GetKasEksEdit($id);
         $data['menu'] = $this->db->get('menu')->result_array();
         $data['maxid'] = $this->Keuangan_model->getMaxidPemasukan();
+        $data['idkasnow'] = $id;
 
         $this->form_validation->set_rules('jumlah', 'Jumlah', 'required');
 
@@ -245,6 +247,7 @@ class Keuangan extends CI_Controller
         $data['keuangan'][] = $this->Keuangan_model->GetKasEksEdit($id);
         $data['menu'] = $this->db->get('menu')->result_array();
         $data['maxid'] = $this->Keuangan_model->getMaxidPemasukan();
+        $data['idkasnow'] = $id;
 
         
         $this->form_validation->set_rules('harga', 'Jumlah', 'required|numeric');
@@ -263,6 +266,14 @@ class Keuangan extends CI_Controller
             redirect('keuangan/pemasukanLuarUsaha');
         }
         
+    }
+
+    public function deleteSubKas($id, $kasid)
+    {
+
+        $this->Keuangan_model->deleteSubKas($id, $kasid);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Transaction has ben deleted!</div>');
+        redirect('keuangan/editkas/KAS/'.$kasid);
     }
 
    

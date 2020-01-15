@@ -226,6 +226,38 @@ class Keuangan_model extends CI_Model
 
     }
 
+    public function deleteSubKas($id, $kasid)
+    {
+        $this->db->delete('pemasukan_detail',[ 'id' => $id ]); 
+        $this->_updateKAS($kasid);
+    }
+
+    public function _updateKAS($kasid)
+    {
+        // Mencari total harga
+        $query = "SELECT
+                        pemasukan_detail.harga,
+                        pemasukan_detail.jumlah 
+                    FROM
+                        pemasukan_detail 
+                    WHERE
+                        pemasukan_detail.id_pemasukan LIKE '$kasid'        
+        ";
+        $kasquery = $this->db->query($query)->result_array();
+        $total = 0 ; $subtotal = 0 ;
+        foreach ($kasquery as $q) {
+            $subtotal = $q['harga'] * $q['jumlah'];
+            $total +=  $subtotal ;
+        }
+        
+        // simpan kas total
+        $data = [
+            'total' => $total
+        ];
+        $this->db->where('id', $kasid);
+        $this->db->update('pemasukan_', $data);
+    }
+
 
 
 }
