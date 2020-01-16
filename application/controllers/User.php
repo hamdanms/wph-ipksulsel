@@ -21,6 +21,41 @@ class User extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function dashboard()
+    {
+        $data['title'] = 'Dashboard';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $time = date('l');
+        $query = "SELECT `user_log`.*, `user`.`name`, `user`.`email`
+                  FROM `user_log` 
+                  JOIN `user`
+                  ON `user_log`.`user_id` = `user`.`id` 
+                  WHERE user_log.time like '$time%'
+                  ORDER BY `user_log`.`id` desc 
+                ";
+        $data['log'] = $this->db->query($query)->result_array();
+        $datem = date('m______'); $datey = date('y');
+        // echo $datem;
+        // die;
+        $data['kasm'] = $this->db->query("SELECT sum(total) as saldo FROM pemasukan_ where tanggal LIKE '$datem' ")->result_array();
+        $data['kasy'] = $this->db->query("SELECT sum(total) as saldo FROM pemasukan_ where tanggal LIKE '______$datey' ")->result_array();
+        $kaskeluar = $this->db->query("SELECT (harga*jumlah) as saldo FROM pengeluaran_ where tanggal LIKE '$datem' ")->result_array();
+        $total = 0;
+        foreach ($kaskeluar as $k):
+            $total += $k['saldo']; 
+        endforeach;
+        $data['kask'] = $total;
+        $data['masuk'] = $this->db->query("SELECT count(id) as masuk FROM pemasukan_ ")->row_array();
+        $data['keluar'] = $this->db->query("SELECT count(id) as keluar FROM pengeluaran_ ")->row_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/index', $data);
+        $this->load->view('templates/footer');
+    }
+
 
     public function edit()
     {
